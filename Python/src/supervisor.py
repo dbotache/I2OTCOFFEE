@@ -78,7 +78,7 @@ def createDir(path):
     return path
 
 def enterName():
-    name = input("Please enter your full name separated by one space: \n")
+    name = input("Please enter your full name seperated by one space: \n")
     namesplit = name.split(" ")
     if not (len(namesplit) == 2):
         print("This seems wrong.. You need a first and a last name seperated by space.")
