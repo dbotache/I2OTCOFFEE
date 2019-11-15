@@ -8,7 +8,7 @@ import cv2
 
 import os
 
-
+#testing
 ENCODINGS_PICKLE = "../data/encodings.pickle"
 
 assert os.path.isfile(ENCODINGS_PICKLE)
