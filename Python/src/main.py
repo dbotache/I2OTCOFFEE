@@ -8,7 +8,7 @@ import dlib
 import cv2
 
 import os
-//hallo
+//yo
 hasTakenImage = False
 isSmiling = False
 smileGoalReached = False
