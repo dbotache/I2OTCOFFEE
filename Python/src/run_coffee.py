@@ -56,7 +56,7 @@ def main():
         # loop over the face detections
         for rect in rects:
             shape = predictor(gray, rect)
-            drawContours(shape, frame)
+            isSmiling = drawContours(shape, frame)
 
         # show the frame
         cv2.imshow("Frame", frame)

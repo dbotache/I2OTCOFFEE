@@ -10,7 +10,7 @@ import numpy as np
 def takePic(frame):
     global hasTakenImage
     global DRAW_CONTOURS
-    cv2.imwrite("open_cv_frame.png", frame)
+    cv2.imwrite("./temp/open_cv_frame.png", frame)
     print("{} written!".format("open_cv_frame.png"))
     hasTakenImage = True
     DRAW_CONTOURS = True
@@ -103,3 +103,4 @@ def drawContours(shape, frame):
 #     # else:
 #     #     cv2.putText(frame, "Kaffee unterwegs :)", (50, 30),
 #     #                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    return isSmiling
