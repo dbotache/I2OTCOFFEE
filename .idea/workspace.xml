@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e331216-9f1b-4ca1-9d8e-20483733519b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/I2OTCOFFEE.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/I2OTCOFFEE.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/src/create_new.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/src/Archiv/create_new.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/src/open_cv_frame.png" beforeDir="false" afterPath="$PROJECT_DIR$/Python/src/open_cv_frame.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/src/recognize_faces_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/src/Archiv/recognize_faces_image.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/src/smile_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/src/Archiv/smile_detection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/src/supervisor.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/src/Archiv/supervisor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/src/main.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +16,7 @@
         <state>
           <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
             <file pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/Python/src/main.py">
+              <entry file="file://$PROJECT_DIR$/Python/src/Archiv/main.py">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="187">
                     <caret line="81" column="61" lean-forward="true" selection-start-line="81" selection-start-column="61" selection-end-line="81" selection-end-column="61" />
@@ -40,11 +33,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5022194">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Python/src/run_coffee.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="248">
-                  <caret line="30" column="53" lean-forward="true" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
+                <state relative-caret-position="408">
+                  <caret line="24" column="12" lean-forward="true" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -52,11 +45,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Python/src/utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="282">
-                  <caret line="82" column="36" lean-forward="true" selection-start-line="82" selection-start-column="36" selection-end-line="82" selection-end-column="36" />
+                <state relative-caret-position="1343">
+                  <caret line="79" column="37" lean-forward="true" selection-start-line="79" selection-start-column="37" selection-end-line="79" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -142,8 +135,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Diego\Desktop\Jura Kaffemaschine\I2OTCOFFEE\Python\src" />
       <recent name="C:\Users\Diego\Desktop\Jura Kaffemaschine\I2OTCOFFEE\Python\src\Archiv" />
+      <recent name="C:\Users\Diego\Desktop\Jura Kaffemaschine\I2OTCOFFEE\Python\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -291,12 +284,12 @@
     <frame x="-178" y="-1088" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1609808" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1609808" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.16303219" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.16303219" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -368,29 +361,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Python/src/main.py">
+    <entry file="file://$PROJECT_DIR$/Python/src/Archiv/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="81" column="61" lean-forward="true" selection-start-line="81" selection-start-column="61" selection-end-line="81" selection-end-column="61" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Python/src/run_coffee.py">
+    <entry file="file://$PROJECT_DIR$/Python/src/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="30" column="53" lean-forward="true" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
+        <state relative-caret-position="1343">
+          <caret line="79" column="37" lean-forward="true" selection-start-line="79" selection-start-column="37" selection-end-line="79" selection-end-column="37" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Python/src/utils.py">
+    <entry file="file://$PROJECT_DIR$/Python/src/run_coffee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="82" column="36" lean-forward="true" selection-start-line="82" selection-start-column="36" selection-end-line="82" selection-end-column="36" />
+        <state relative-caret-position="408">
+          <caret line="24" column="12" lean-forward="true" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
