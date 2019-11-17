@@ -13,7 +13,6 @@ from utils import smileDetector, eyeAspectRatio
 
 from utils import drawContours
 
-
 from sender import Sender
 
 LANDMARKS_FILE = "./face_recognition/examples/shape_predictor_68_face_landmarks.dat"
@@ -35,8 +34,35 @@ def input():
 
 def coffee_msg(frame, show=False):
     if show:
-        cv2.putText(frame, "Kaffee unterwegs!", (50, 100),
+        cv2.putText(frame, "Kaffee unterwegs!", (0, 350),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+def make_coffee(frame, ear):
+    if ear < 0.23:
+        cv2.putText(frame, "you are looking too tired!", (400, 350),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        cv2.putText(frame, "I give you a Expresso!", (400, 370),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+    if ear > 0.23 and ear < 0.25:
+        cv2.putText(frame, "Have a nice Day!", (400, 350),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        cv2.putText(frame, "I give you a Coffe!", (400, 370),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+    if ear > 0.25 and ear < 0.27:
+        cv2.putText(frame, "you are looking Beautiful!", (400, 350),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        cv2.putText(frame, "I give you a Capuccino!", (400, 370),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+    if ear > 0.27:
+        cv2.putText(frame, "you have too much coffee!", (400, 350),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        cv2.putText(frame, "I give you a Latte-Machiatto!", (400, 370),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+
 
 def main():
     args = input()
@@ -54,6 +80,7 @@ def main():
     smileStart = 0
 
     ear_list = []
+    ear_mean = 0
     while True:
         # grab the frame from the threaded video file stream, resize
         # it, and convert it to grayscale
@@ -65,14 +92,24 @@ def main():
         # detect faces in the grayscale frame
         rects = detector(gray, 0)
 
+        coffee_msg(frame, show)
+
+        if ear_mean > 0:
+            make_coffee(frame, ear_mean)
+
         # loop over the face detections
         for rect in rects:
+            if show != True:
+                cv2.putText(frame, "Hey! Do you want a Coffee??", (400, 350),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+                cv2.putText(frame, "Yes? -- > give me a smile :)", (400, 370),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
             #print("width: ", rect.width(), "heigth: ", rect.height())
             rect_width = rect.height()
             shape = predictor(gray, rect)
             isSmiling, ear = drawContours(shape, frame, rect_width, draw=draw)
-
-            coffee_msg(frame, show)
 
             if isSmiling:
                 cv2.putText(frame, "Smiling!", (0, 20),
@@ -81,6 +118,7 @@ def main():
                 if smileStart == 0:
                     show = False
                     smileStart = time.time()
+                    ear_mean = 0
 
                 if smileStart > 0:
                     smileDuration = int(round(time.time()) - smileStart)
@@ -89,9 +127,19 @@ def main():
 
                 if smileDuration > 2:
                     if show == False:
+                        ear_mean = np.mean(ear_list)
+
                         print("ear mean: ", np.mean(ear_list))
-                        # Sender().send("KAFFEE_1")
-                        print("Sender")
+
+                        if ear < 0.21:
+                            Sender().send("Espresso")
+                        if ear > 0.21 and ear < 0.22:
+                            Sender().send("Coffee")
+                        if ear > 0.22 and ear < 0.23:
+                            Sender().send("Cappuchino")
+                        if ear > 0.23:
+                            Sender().send("LatteMachiatto")
+
                     show = True
 
             else:
