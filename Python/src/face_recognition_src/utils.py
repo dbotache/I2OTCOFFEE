@@ -68,34 +68,49 @@ def drawContours(shape, frame, width, draw=True):
 
     shape = face_utils.shape_to_np(shape)
 
+    isSmiling = smileDetector(shape, width)
+
+    # shape[:, 0] = np.dot(shape[:, 0], 10/3).astype('int')
+    # shape[:, 1] = np.dot(shape[:, 0], 10/3).astype('int')
+
+    # print('shape: ', shape, '\n')
+
     mouth = shape[mStart:mEnd]
     leftEye = shape[lStart:lEnd]
     rightEye = shape[rStart:rEnd]
     leftEAR = eyeAspectRatio(leftEye)
     rightEAR = eyeAspectRatio(rightEye)
 
+    # print('mouth: ', mouth)
+    # print('leftEye: ', leftEye)
+    # print('rightEye: ', rightEye)
+    # print('leftEAR: ', leftEAR)
+    # print('rightEAR: ', rightEAR)
+
     ear = (leftEAR + rightEAR) / 2.0
 
-    isSmiling = smileDetector(shape, width)
+    # isSmiling = smileDetector(shape, width)
 
     leftEyeHull = cv2.convexHull(leftEye)
     rightEyeHull = cv2.convexHull(rightEye)
     mouthHull = cv2.convexHull(mouth)
+
+    # print('leftEyeHull: ', leftEyeHull)
+    # print('rightEyeHull: ', rightEyeHull)
+    # print('mouthHull: ', mouthHull)
+
+    leftEyeHull = np.dot(leftEyeHull, 10/3).astype('int')
+    rightEyeHull = np.dot(rightEyeHull, 10/3).astype('int')
+    mouthHull = np.dot(mouthHull, 10/3).astype('int')
 
     if draw:
         cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
         cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
         cv2.drawContours(frame, [mouthHull], -1, (0, 255, 0), 1)
 
-    # cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),
-    #             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-    # cv2.putText(frame, "SMILE: {:.2f}".format(isSmiling), (300, 100),
-    #             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-#
-#     # if smileGoalReached == False:
-#     #     cv2.putText(frame, "SMILETIMER: {:.2f}".format(smileDuration), (50, 30),
-#     #                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-#     # else:
-#     #     cv2.putText(frame, "Kaffee unterwegs :)", (50, 30),
-#     #                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+        cv2.putText(frame, "EAR: {:.2f}".format(ear), (0, 850),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+        cv2.putText(frame, "SMILE: {:.2f}".format(isSmiling), (0, 870),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+
     return isSmiling, ear

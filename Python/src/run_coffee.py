@@ -6,16 +6,15 @@ import dlib
 import numpy as np
 
 from imutils.video import VideoStream
-from imutils import face_utils
 import time
 
-from utils import smileDetector, eyeAspectRatio
-
-from utils import drawContours
+# from face_recognition.utils import drawContours
+from face_recognition_src.utils import drawContours
+from face_recognition_src.face_detector import FaceDetector
 
 from sender import Sender
 
-LANDMARKS_FILE = "./face_recognition/examples/shape_predictor_68_face_landmarks.dat"
+LANDMARKS_FILE = "./face_recognition_src/examples/shape_predictor_68_face_landmarks.dat"
 
 # check if landmarks file available
 assert os.path.isfile(LANDMARKS_FILE)
@@ -70,6 +69,11 @@ def main():
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(args["shape_predictor"])
 
+    # --- with Class
+    # face_detector = FaceDetector(args["shape_predictor"])
+    # face_detector.start_face_detector()
+    # face_detector.start_predictor()
+
     vs = VideoStream(WEBCAM).start()
     time.sleep(1.0)
 
@@ -79,6 +83,7 @@ def main():
     smileDuration = 0
     smileStart = 0
 
+    rects = []
     ear_list = []
     ear_mean = 0
     while True:
@@ -86,11 +91,19 @@ def main():
         # it, and convert it to grayscale
         # channels)
         frame = vs.read()
-        frame = imutils.resize(frame, width=700, height=600)
+        frame = imutils.resize(frame, width=1280, height=800)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        # rescaling
+        width = np.dot(frame.shape[1], .3).astype('int')
+        height = np.dot(frame.shape[0], .3).astype('int')
+        gray = imutils.resize(frame, width=width, height=height)
 
         # detect faces in the grayscale frame
         rects = detector(gray, 0)
+
+        # --- with Class
+        # rects = face_detector.read_faces(gray)
 
         coffee_msg(frame, show)
 
@@ -98,17 +111,25 @@ def main():
             make_coffee(frame, ear_mean)
 
         # loop over the face detections
-        for rect in rects:
+        for rect in rects[0:1]:
             if show != True:
-                cv2.putText(frame, "Hey! Do you want a Coffee??", (400, 350),
+                cv2.putText(frame, "Hey! Do you want a Coffee??", (1000, 800),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
-                cv2.putText(frame, "Yes? -- > give me a smile :)", (400, 370),
+                cv2.putText(frame, "Yes? -- > give me a smile :)", (1000, 820),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
-            #print("width: ", rect.width(), "heigth: ", rect.height())
+            # print("width: ", rect.width(), "heigth: ", rect.height())
             rect_width = rect.height()
+
             shape = predictor(gray, rect)
+
+            # --- with Class
+            # shape = face_detector.predict_shape(gray, rect)
+
+            #print(shape)
+            #hape = imutils.resize(shape, width=1280, height=800)
+
             isSmiling, ear = drawContours(shape, frame, rect_width, draw=draw)
 
             if isSmiling:
@@ -152,9 +173,7 @@ def main():
         key = cv2.waitKey(1) & 0xFF
 
         if key == ord("l"):
-            draw = True
-        else:
-            draw = False
+            draw = not draw
 
         # if the `q` key was pressed, break from the loop
         if key == ord("q"):
