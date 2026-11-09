@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.idea/
+.vscode/
+!firmware/.vscode/
+!firmware/.vscode/extensions.json
+firmware/.pio/
+firmware/include/config.h
+# Existing tracked research assets remain present; ignore new local data.
+data/local/
+models/*.dat
+models/*.bz2
+temp/
+!models/shape_predictor_68_face_landmarks.dat

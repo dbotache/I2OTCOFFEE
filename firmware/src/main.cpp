@@ -1,3 +1,18 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2026 Diego Botache
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 /**
  * Before Flashing Put GPIO0 to Low (Flashing mode) - >>>> Jumper below the ESP8266 Board
  * Disconnect Serial wires from Level converter (Answer from Coffemaker generates error on flashing) Jumpers down the arduino board
@@ -18,10 +33,9 @@
 void TranslateToJura(String c);
 void toCoffeemaker(String outputString);
 
-const char* ssid = "Diego-wlan";
-const char* password = "11a22b33c44d";
+#include "config.h"
 
-WiFiServer wifiServer(8585);
+WiFiServer wifiServer(COFFEE_TCP_PORT);
 
 byte z[4];
 String msg;
@@ -32,7 +46,7 @@ void setup()
   // initialize LED digital pin as an output.
   Serial.begin(9600);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
   pinMode(LED_BUILTIN, OUTPUT);
   delay(1000);
@@ -58,12 +72,13 @@ void loop()
   {
     digitalWrite(LED_BUILTIN, LOW);
   
-    WiFiClient client = wifiServer.available();
+    WiFiClient client = wifiServer.accept();
 
     if (client) {
       while (client.connected()) {
         while(client.available()){
           msg = client.readStringUntil('\r');
+          msg.trim();
           TranslateToJura(msg);
           // if(Serial.available())
           // {       
@@ -121,10 +136,13 @@ void loop()
 
 // TODO: Weitere If-cases für verschiedene Getränke:
 void TranslateToJura(String c){
-  if (c == "KAFFEE_1"){
+  if (c == "KAFFEE_1" || c == "Coffee"){
     // Nachricht an Coffeemaker:
     toCoffeemaker("FA:04\r\n"); delay(7);
   } 
+  if (c == "Espresso"){
+    toCoffeemaker("FA:03\r\n"); delay(7);
+  }
   if (c == "KAFFEE_2"){
     // Nachricht an Coffeemaker:
     toCoffeemaker("FA:04\r\n"); delay(100);

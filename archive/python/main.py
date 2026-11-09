@@ -4,7 +4,7 @@ class Sender(object):
     def __init__(self):
         import socket
         global s
-        TCP_IP = '10.12.1.189'
+        TCP_IP = '127.0.0.1'  # historical example; configure for your board
         TCP_PORT = 8585
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))

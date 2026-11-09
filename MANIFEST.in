@@ -1,0 +1,10 @@
+recursive-include docs *.md
+include firmware/platformio.ini
+include firmware/README.md
+include firmware/include/config.example.h
+recursive-include firmware/src *.cpp *.h
+exclude firmware/include/config.h
+include models/README.md
+include data/README.md
+include archive/README.md
+include examples/legacy/README.md

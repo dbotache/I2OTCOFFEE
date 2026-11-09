@@ -1,0 +1,11 @@
+I2OTCOFFEE
+Copyright 2019-2026 Diego Botache
+
+The original active application, firmware project files, tests, configuration,
+and documentation are licensed under the Apache License, Version 2.0.
+
+The historical model, datasets, face embeddings, archived source, and legacy
+examples are excluded from that grant. The new README documentation within
+those directories is covered. See docs/LICENSING.md for the precise scope.
+
+Third-party dependencies retain their own licenses and notices.

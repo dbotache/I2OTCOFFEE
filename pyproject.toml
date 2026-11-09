@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "i2otcoffee"
+version = "0.1.0"
+description = "Smile-triggered coffee machine demo with an ESP8266 TCP bridge"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "docs/LICENSING.md"]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+vision = ["numpy>=1.24", "opencv-python>=4.8", "dlib>=19.24"]
+firmware = ["platformio>=6.1"]
+
+[project.scripts]
+i2otcoffee = "i2otcoffee.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
