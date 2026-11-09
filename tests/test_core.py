@@ -50,6 +50,18 @@ class TransportTests(unittest.TestCase):
 
 
 class TriggerTests(unittest.TestCase):
+    def test_progress_tracks_hold_and_resets(self):
+        trigger = SmileTrigger(2, 10)
+        self.assertEqual(trigger.progress(0), 0)
+        trigger.update(True, 10)
+        self.assertEqual(trigger.progress(9), 0)
+        self.assertEqual(trigger.progress(10), 0)
+        self.assertEqual(trigger.progress(11), 0.5)
+        self.assertEqual(trigger.progress(12), 1)
+        self.assertEqual(trigger.progress(20), 1)
+        trigger.update(False, 20)
+        self.assertEqual(trigger.progress(20), 0)
+
     def test_hold_rearm_and_cooldown(self):
         trigger = SmileTrigger(hold_seconds=2, cooldown_seconds=10)
         events = [(True, 0), (True, 1), (True, 2), (True, 20),

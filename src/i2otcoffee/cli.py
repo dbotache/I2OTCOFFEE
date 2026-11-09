@@ -64,6 +64,8 @@ def main(argv=None):
     capture = cv2.VideoCapture(args.webcam)
     draw = False
     status = f"{'SEND ENABLED' if args.send else 'PREVIEW'}: {args.drink} | q: quit, l: landmarks"
+    feedback = "Hold a smile to begin"
+    feedback_color = (255, 255, 255)
     print(status)
     try:
         if not capture.isOpened():
@@ -71,7 +73,7 @@ def main(argv=None):
         while True:
             ok, frame = capture.read()
             if not ok:
-                raise RuntimeError("Camera stopped returning frames")
+                parser.exit(1, f"error: Webcam {args.webcam} disconnected or stopped returning frames.\n")
             height, width = frame.shape[:2]
             small_width = max(1, round(width * 0.3))
             small_height = max(1, round(height * 0.3))
@@ -85,15 +87,30 @@ def main(argv=None):
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 1)
                 if draw:
                     draw_landmarks(frame, points, width / small_width, height / small_height)
-            if trigger.update(smiling, time.monotonic()):
+            now = time.monotonic()
+            if trigger.update(smiling, now):
                 if sender is None:
+                    feedback = f"Preview: would send {args.drink}"
+                    feedback_color = (0, 255, 255)
                     print(f"[PREVIEW] Would send {args.drink}")
                 else:
                     try:
                         sender.send(args.drink)
+                        feedback = f"Sent {args.drink} (not acknowledged)"
+                        feedback_color = (0, 255, 0)
                         print(f"Sent {args.drink} to {args.host}:{args.port} (no brew acknowledgement)")
                     except OSError as error:
+                        feedback = f"Send failed: {error}"
+                        feedback_color = (0, 0, 255)
                         print(f"Send failed: {error}")
+            hold_status = f"Smile hold: {trigger.progress(now):.0%}"
+            if trigger.fired:
+                hold_status += " | Release smile to rearm"
+            elif now < trigger.last_trigger + trigger.cooldown_seconds:
+                remaining = trigger.last_trigger + trigger.cooldown_seconds - now
+                hold_status += f" | Cooldown: {remaining:.1f}s"
+            cv2.putText(frame, hold_status, (10, 75), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+            cv2.putText(frame, feedback, (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, feedback_color, 1)
             cv2.putText(frame, status, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
             cv2.imshow("I2OTCOFFEE", frame)
             key = cv2.waitKey(1) & 0xFF

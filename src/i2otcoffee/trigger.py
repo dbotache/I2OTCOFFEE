@@ -38,3 +38,9 @@ class SmileTrigger:
             self.last_trigger = now
             return True
         return False
+
+    def progress(self, now):
+        """Return the current smile hold as a fraction between zero and one."""
+        if self.started is None:
+            return 0.0
+        return max(0.0, min(1.0, (now - self.started) / self.hold_seconds))

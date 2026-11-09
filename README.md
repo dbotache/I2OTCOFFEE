@@ -38,6 +38,8 @@ i2otcoffee --shape-predictor models/shape_predictor_68_face_landmarks.dat --webc
 
 Hold a smile for two seconds. Preview mode prints `[PREVIEW] Would send Coffee`, with no network connection. Press `l` to toggle landmarks and `q` to quit. Only the first detected face is analyzed. A sustained smile triggers once; stop smiling to rearm. A ten-second cooldown separates triggers. Losing the detected face also resets the smile hold.
 
+The camera window shows smile-hold progress, rearm/cooldown status, and the latest preview or command result. Failed sends appear in red. A successful send reports that the command was sent, without claiming that brewing was confirmed. If the webcam disconnects or stops providing frames, the app prints a concise error, exits with status 1, and releases the camera and window.
+
 ```bash
 i2otcoffee --smile-threshold 0.30 --smile-seconds 3 --cooldown 15
 ```
